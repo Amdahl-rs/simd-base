@@ -2,8 +2,8 @@
 
 mkdir simdbase && cd simdbase
 mkdir conf
-curl -LJO 'https://github.com/Amdahl-rs/simd-base'
-tar xzvf 'simdbase-v0.1.1-x86_64.tar.xz'
+wget 'https://github.com/Amdahl-rs/simd-base/releases/download/untagged-b16b10dd42dc2b547019/simdbase-v0.1.1-x86_64.zip'
+unzip 'simdbase-v0.1.1-x86_64.zip'
  
 echo '[log] 
 log_dir = "/simdbase/_logs"
@@ -12,14 +12,13 @@ log_dir = "/simdbase/_logs"
  num_cpus=16
 
 [storage.disk]
-# fs|s3
 type = "fs"
 
 [storage.fs]
 data_path = "/simdbase/cells"' > conf/conf.toml
 
-wget --continue 'https://datasets.clickhouse.com/hits_compatible/hits.tsv.gz'
-gzip -d hits.tsv.gz
+#wget --continue 'https://datasets.clickhouse.com/hits_compatible/hits.tsv.gz'
+#gzip -d hits.tsv.gz
 
  ./simdbase-bin 2>&1 &
 mysql -h 0.0.0.0 -P9333 < create.sql
